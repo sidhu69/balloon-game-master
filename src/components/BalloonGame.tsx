@@ -52,6 +52,15 @@ const BalloonGame: React.FC = () => {
     }
   }, [state.isRunning, gameLoop]);
 
+  // Dispatch game state changes for Play page to track
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent("game-state-change", {
+        detail: { score: state.score, isRunning: state.isRunning },
+      })
+    );
+  }, [state.score, state.isRunning]);
+
   // Force re-render for sway animation
   const [, setForceRender] = useState(0);
   useEffect(() => {
